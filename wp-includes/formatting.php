@@ -3489,7 +3489,7 @@ function translate_smiley( $matches ) {
 function convert_smilies( $text ) {
 	global $wp_smiliessearch;
 	$output = '';
-	if ( get_option( 'use_smilies' ) && ! empty( $wp_smiliessearch ) ) {
+	if ( !empty($text) && get_option( 'use_smilies' ) && ! empty( $wp_smiliessearch ) ) {
 		// HTML loop taken from texturize function, could possible be consolidated.
 		$textarr = preg_split( '/(<.*>)/U', $text, -1, PREG_SPLIT_DELIM_CAPTURE ); // Capture the tags as well as in between.
 		$stop    = count( $textarr ); // Loop stuff.
@@ -3978,7 +3978,7 @@ function wp_trim_excerpt( $text = '', $post = null ) {
 
 		/** This filter is documented in wp-includes/post-template.php */
 		$text = apply_filters( 'the_content', $text );
-		$text = str_replace( ']]>', ']]&gt;', $text );
+		$text = empty($text) ? $text : str_replace( ']]>', ']]&gt;', $text );
 
 		// Restore the original filter if removed.
 		if ( $filter_block_removed ) {
